@@ -1,8 +1,8 @@
-<%@page import="com.sample.BoardVO.BoardVO"%>
+<%@page import="com.sample.DataVO.DataVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	List<BoardVO> boardList = (List<BoardVO>)request.getAttribute("boardList");
+	List<DataVO> dataList = (List<DataVO>)request.getAttribute("dataList");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,14 +29,15 @@
 					<th>등록일</th>
 				</tr>
 				<%
-					if(boardList != null && boardList.size() > 0) {
-						int number = 1;
-						for(BoardVO boardVO : boardList) {%>
+					if(dataList != null && dataList.size() > 0) {
+								int number = 1;
+								for(DataVO dataVO : dataList) {
+				%>
 							<tr>
 								<td><%=number %></td>
-								<td><%=boardVO.getDataTitle() %></td>
-								<td><%=boardVO.getUserNickname() %></td>
-								<td><%=boardVO.getRegDate() %></td>
+								<td><a href="/board/View?dataUid=<%=dataVO.getDataUid()%>"><%=dataVO.getDataTitle() %></a></td>
+								<td><%=dataVO.getUserNickname() %></td>
+								<td><%=dataVO.getRegDate() %></td>
 							</tr>
 						<%
 						number++;

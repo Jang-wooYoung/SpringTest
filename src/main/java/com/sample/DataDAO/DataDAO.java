@@ -1,12 +1,12 @@
-package com.sample.BoardService;
+package com.sample.DataDAO;
 
 import java.util.List;
 
-import com.sample.DataVO.*;
+import com.sample.DataVO.*;;
 
-public interface BoardService {
+public interface DataDAO {
 	
-	//게시글작성
+	//게시글 작성
 	public void write(DataVO dataVO) throws Exception;
 	
 	//게시글 목록 조회

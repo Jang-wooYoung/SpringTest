@@ -31,7 +31,7 @@
     </bean>
 	
 	<!-- scan -->
-	<context:component-scan base-package="com.sample.BoardDAO"></context:component-scan>
+	<context:component-scan base-package="com.sample.DataDAO"></context:component-scan>
 	<context:component-scan base-package="com.sample.BoardService"></context:component-scan>
-	<context:component-scan base-package="com.sample.BoardVO"></context:component-scan>	
+	<context:component-scan base-package="com.sample.DataVO"></context:component-scan>	
 </beans>

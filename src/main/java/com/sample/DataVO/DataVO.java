@@ -1,8 +1,8 @@
-package com.sample.BoardVO;
+package com.sample.DataVO;
 
 import java.util.Date;
 
-public class BoardVO {
+public class DataVO {
 	private String dataUid;
 	private String dataTitle;	
 	private String dataContent;
