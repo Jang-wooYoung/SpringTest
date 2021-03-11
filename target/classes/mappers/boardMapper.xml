@@ -9,4 +9,10 @@
 		BOARD_DATA(DATAUID, DATATITLE, DATACONTENT, USERNICKNAME, REGDATE) 
 		VALUES(#{dataUid}, #{dataTitle}, #{dataContent}, #{userNickname}, NOW());
 	</insert>
+	
+	<select id="boardlist" resultType="com.sample.BoardVO.BoardVO">
+		SELECT 
+		DATAUID,DATATITLE,DATACONTENT,USERNICKNAME,REGDATE FROM BOARD_DATA 
+		ORDER BY REGDATE DESC;
+	</select>
 </mapper>
