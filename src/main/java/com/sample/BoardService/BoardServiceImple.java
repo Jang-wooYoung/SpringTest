@@ -21,6 +21,18 @@ public class BoardServiceImple implements BoardService{
 		dao.write(dataVO);		
 	}
 	
+	//게시글 수정
+	@Override
+	public void update(DataVO dataVO) throws Exception {
+		dao.update(dataVO);
+	}
+	
+	//게시글 삭제
+	@Override
+	public void delete(String dataUid) throws Exception {
+		dao.delete(dataUid);
+	}
+	
 	//게시글 목록 조회
 	@Override
 	public List<DataVO> dataList() throws Exception {

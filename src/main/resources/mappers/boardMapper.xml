@@ -22,4 +22,17 @@
 		FROM BOARD_DATA 
 		WHERE DATAUID = #{dataUid};
 	</select>
+	
+	<update id="update" parameterType="com.sample.DataVO.DataVO">
+		UPDATE 
+		BOARD_DATA SET 
+		DATATITLE = #{dataTitle}, DATACONTENT = #{dataContent} 
+		WHERE DATAUID = #{dataUid};
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		DELETE 
+		FROM BOARD_DATA 
+		WHERE DATAUID = #{dataUid};
+	</delete>
 </mapper>

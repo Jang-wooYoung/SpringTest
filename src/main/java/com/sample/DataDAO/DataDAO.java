@@ -9,6 +9,12 @@ public interface DataDAO {
 	//게시글 작성
 	public void write(DataVO dataVO) throws Exception;
 	
+	//게시글 수정
+	public void update(DataVO dataVO) throws Exception;
+	
+	//게시글 삭제
+	public void delete(String dataUid) throws Exception;
+	
 	//게시글 목록 조회
 	public List<DataVO> dataList() throws Exception;
 	

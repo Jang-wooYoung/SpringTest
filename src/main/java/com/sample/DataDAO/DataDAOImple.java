@@ -22,6 +22,18 @@ public class DataDAOImple implements DataDAO {
 		sqlSession.insert(namespace+".write", dataVO);		
 	}
 	
+	//게시글수정
+	@Override
+	public void update(DataVO dataVO) throws Exception {
+		sqlSession.update(namespace+".update", dataVO);
+	}
+	
+	//게시글삭제
+	@Override
+	public void delete(String dataUid) throws Exception {
+		sqlSession.delete(namespace+".delete", dataUid);
+	}
+	
 	//게시글 목록 조회
 	@Override
 	public List<DataVO> dataList() throws Exception {
