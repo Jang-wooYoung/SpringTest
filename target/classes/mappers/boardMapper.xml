@@ -13,7 +13,7 @@
 	<select id="datalist" resultType="com.sample.DataVO.DataVO">
 		SELECT 
 		DATAUID,DATATITLE,DATACONTENT,USERNICKNAME,REGDATE FROM BOARD_DATA 
-		ORDER BY REGDATE DESC;
+		ORDER BY REGDATE DESC LIMIT #{rowStart},#{rowEnd};
 	</select>
 	
 	<select id="detail" parameterType="String" resultType="com.sample.DataVO.DataVO">
@@ -35,4 +35,10 @@
 		FROM BOARD_DATA 
 		WHERE DATAUID = #{dataUid};
 	</delete>
+	
+	<select id="listCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) FROM BOARD_DATA;
+	]]>
+	</select>
 </mapper>

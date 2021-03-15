@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.sample.BoardVO.BoardVO;
 import com.sample.DataDAO.*;
 import com.sample.DataVO.*;
 
@@ -35,13 +36,19 @@ public class BoardServiceImple implements BoardService{
 	
 	//게시글 목록 조회
 	@Override
-	public List<DataVO> dataList() throws Exception {
-		return dao.dataList();
+	public List<DataVO> dataList(BoardVO boardVO) throws Exception {
+		return dao.dataList(boardVO);
 	}
 	
 	//게시글 상세보기
 	@Override
 	public DataVO detail(String dataUid) throws Exception {
 		return dao.detail(dataUid);
+	}
+	
+	//개시글 개수
+	@Override
+	public int listCount() throws Exception {
+		return dao.listCount();
 	}
 }

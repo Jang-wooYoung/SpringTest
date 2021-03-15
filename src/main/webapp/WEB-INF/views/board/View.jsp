@@ -2,7 +2,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	int currentPage = 1;
+	int rowCount = 5;
+	int blockPage = 5;
+	
+	if(request.getParameter("currentPage") != null && !"".equals(request.getParameter("currentPage"))) currentPage = Integer.valueOf(request.getParameter("currentPage"));
+	if(request.getParameter("rowCount") != null && !"".equals(request.getParameter("rowCount"))) rowCount = Integer.valueOf(request.getParameter("rowCount"));
+	if(request.getParameter("blockPage") != null && !"".equals(request.getParameter("blockPage"))) blockPage = Integer.valueOf(request.getParameter("blockPage"));
+	
 	DataVO dataVO = (DataVO)request.getAttribute("detail");
+	
+	String pagemoveOption = "currentPage="+currentPage+"&rowCount="+rowCount+"&blockPage="+blockPage;
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +30,9 @@
 		</div>
 		<hr />
 		
-		<nav>홈 - 글작성</nav>
+		<div>
+			<%@include file="nav.jsp" %>
+		</div>
 		<hr />
 		
 		<section id="container">
@@ -56,11 +68,16 @@
 			});
 			
 			$(".btn_delete").on("click", function(){
-				location.href = "/board/delete?dataUid=<%=dataVO.getDataUid()%>";
+				var deletecheck = confirm("삭제를 하시겠습니까?");
+				if(deletecheck == true) {
+					location.href = "/board/delete?dataUid=<%=dataVO.getDataUid()%>";	
+				}else {
+					return false;
+				}
 			});
 			
 			$(".btn_list").on("click", function(){
-				location.href = "/board/list";
+				location.href = "/board/list?<%=pagemoveOption%>";
 			});
 		});
 	</script>

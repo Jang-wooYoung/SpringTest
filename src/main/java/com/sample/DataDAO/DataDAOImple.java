@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.sample.BoardVO.BoardVO;
 import com.sample.DataVO.*;
 
 @Repository
@@ -36,13 +37,19 @@ public class DataDAOImple implements DataDAO {
 	
 	//게시글 목록 조회
 	@Override
-	public List<DataVO> dataList() throws Exception {
-		return sqlSession.selectList(namespace+".datalist");
+	public List<DataVO> dataList(BoardVO boardVO) throws Exception {
+		return sqlSession.selectList(namespace+".datalist", boardVO);
 	}
 	
 	//게시글 상세보기
 	@Override
 	public DataVO detail(String dataUid) throws Exception {
 		return sqlSession.selectOne(namespace+".detail", dataUid);
+	}
+	
+	//게시글 총개수
+	@Override
+	public int listCount() throws Exception {
+		return sqlSession.selectOne(namespace+".listCount");
 	}
 }

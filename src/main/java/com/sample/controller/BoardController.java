@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sample.BoardService.*;
+import com.sample.BoardVO.BoardVO;
 import com.sample.DataVO.*;
 
 @Controller
@@ -60,9 +61,28 @@ public class BoardController {
 	
 	//게시판 목록 조회
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) throws Exception {
+	public String list(Model model, HttpServletRequest req) throws Exception {
 		logger.info("list");
-		model.addAttribute("dataList",service.dataList());
+		
+		int currentPage = 1;
+		int rowCount = 5;
+		int blockPage = 5;
+		
+		if(req.getParameter("currentPage") != null && !"".equals(req.getParameter("currentPage"))) currentPage = Integer.valueOf(req.getParameter("currentPage"));
+		if(req.getParameter("rowCount") != null && !"".equals(req.getParameter("rowCount"))) rowCount = Integer.valueOf(req.getParameter("rowCount"));
+		if(req.getParameter("blockPage") != null && !"".equals(req.getParameter("blockPage"))) blockPage = Integer.valueOf(req.getParameter("blockPage"));
+		
+		BoardVO boardVO = new BoardVO();
+		
+		boardVO.setCurrentPage(currentPage);
+		boardVO.setBlockPage(blockPage);
+		boardVO.setRowCount(rowCount);
+		boardVO.setRowStart(currentPage, rowCount);
+		boardVO.setRowEnd(currentPage, rowCount);
+		boardVO.setTotalCount(service.listCount());		
+		
+		model.addAttribute("dataList",service.dataList(boardVO));
+		model.addAttribute("boardVO", boardVO); 
 		return "/board/list";
 	}
 	

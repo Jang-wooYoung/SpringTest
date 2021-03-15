@@ -31,10 +31,9 @@
 			</header>
 			<hr />
 			 
-			<nav>
-			  홈 - 글 작성<br>
-			 mode = <%=mode %>
-			</nav>
+			<div>
+				<%@include file="nav.jsp" %>
+			</div>
 			<hr />
 			
 			<section id="container">
