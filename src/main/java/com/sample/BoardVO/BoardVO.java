@@ -9,12 +9,22 @@ public class BoardVO {
 	private int rowEnd;
 	private int totalCount;
 	private int startPage; //첫페이지
-	private int endPage; //끝페이지	
+	private int endPage; //끝페이지
+	private String searchType = "";
+	private String keyword = "";
 	
 	public BoardVO() {
 		this.currentPage = 1;
 		this.rowCount = 5;
 		this.blockPage = 5;
+	}
+	
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+	
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 	
 	public void setTotalCount(int totalCount) {
@@ -92,6 +102,14 @@ public class BoardVO {
 		return this.rowEnd;
 	}
 	
+	public String getSearchType() {
+		return this.searchType;
+	}
+	
+	public String getKeyword() {
+		return this.keyword;
+	}
+	
 	private void calcData() {
 		endPage = (int)Math.ceil((double)totalCount / (double)rowCount);		
 		startPage = 1;
@@ -99,6 +117,6 @@ public class BoardVO {
 	
 	@Override
 	public String toString() {
-		return "BoardVO [currentPage = "+currentPage+", rowCount = "+rowCount+", rowStart = "+rowStart+", rowEnd = "+rowEnd+"]";
-	}
+		return "BoardVO [currentPage = "+currentPage+", rowCount = "+rowCount+", rowStart = "+rowStart+", rowEnd = "+rowEnd+", searchType = "+searchType+", keyword = "+keyword+"]";
+	}	
 }

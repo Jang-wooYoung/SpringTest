@@ -23,5 +23,5 @@ public interface DataDAO {
 	public DataVO detail(String dataUid) throws Exception;
 	
 	//게시글 갯수
-	public int listCount() throws Exception;
+	public int listCount(BoardVO boardVO) throws Exception;
 }

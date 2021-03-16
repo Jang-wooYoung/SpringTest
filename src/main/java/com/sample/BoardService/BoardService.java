@@ -23,5 +23,5 @@ public interface BoardService {
 	public DataVO detail(String dataUid) throws Exception;
 	
 	//게시글 개수
-	public int listCount() throws Exception;
+	public int listCount(BoardVO baordVO) throws Exception;
 }

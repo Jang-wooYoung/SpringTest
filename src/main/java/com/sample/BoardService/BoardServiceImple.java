@@ -48,7 +48,7 @@ public class BoardServiceImple implements BoardService{
 	
 	//개시글 개수
 	@Override
-	public int listCount() throws Exception {
-		return dao.listCount();
+	public int listCount(BoardVO boardVO) throws Exception {
+		return dao.listCount(boardVO);
 	}
 }

@@ -67,10 +67,14 @@ public class BoardController {
 		int currentPage = 1;
 		int rowCount = 5;
 		int blockPage = 5;
+		String searchType = "";
+		String keyword = "";		
 		
 		if(req.getParameter("currentPage") != null && !"".equals(req.getParameter("currentPage"))) currentPage = Integer.valueOf(req.getParameter("currentPage"));
 		if(req.getParameter("rowCount") != null && !"".equals(req.getParameter("rowCount"))) rowCount = Integer.valueOf(req.getParameter("rowCount"));
 		if(req.getParameter("blockPage") != null && !"".equals(req.getParameter("blockPage"))) blockPage = Integer.valueOf(req.getParameter("blockPage"));
+		if(req.getParameter("searchType") != null && !"".equals(req.getParameter("searchType"))) searchType = (String)req.getParameter("searchType");
+		if(req.getParameter("keyword") != null && !"".equals(req.getParameter("keyword"))) keyword = (String)req.getParameter("keyword");
 		
 		BoardVO boardVO = new BoardVO();
 		
@@ -79,7 +83,9 @@ public class BoardController {
 		boardVO.setRowCount(rowCount);
 		boardVO.setRowStart(currentPage, rowCount);
 		boardVO.setRowEnd(currentPage, rowCount);
-		boardVO.setTotalCount(service.listCount());		
+		boardVO.setSearchType(searchType);
+		boardVO.setKeyword(keyword);
+		boardVO.setTotalCount(service.listCount(boardVO));		
 		
 		model.addAttribute("dataList",service.dataList(boardVO));
 		model.addAttribute("boardVO", boardVO); 

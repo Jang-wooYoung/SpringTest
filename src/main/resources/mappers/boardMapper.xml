@@ -13,6 +13,7 @@
 	<select id="datalist" resultType="com.sample.DataVO.DataVO">
 		SELECT 
 		DATAUID,DATATITLE,DATACONTENT,USERNICKNAME,REGDATE FROM BOARD_DATA 
+		<include refid="search"></include> 
 		ORDER BY REGDATE DESC LIMIT #{rowStart},#{rowEnd};
 	</select>
 	
@@ -37,8 +38,14 @@
 	</delete>
 	
 	<select id="listCount" resultType="int">
-	<![CDATA[
-		SELECT COUNT(*) FROM BOARD_DATA;
-	]]>
+		SELECT COUNT(*) FROM BOARD_DATA <include refid="search"></include>;
 	</select>
+	
+	<sql id="search">
+		<if test='searchType != null and searchType!=""'>
+			<if test="searchType == 'dataTitle'.toString()">WHERE DATATITLE LIKE CONCAT('%',#{keyword},'%')</if>
+			<if test="searchType == 'dataContent'.toString()">WHERE DATACONTENT LIKE CONCAT('%',#{keyword},'%')</if>
+			<if test="searchType == 'userNickname'.toString()">WHERE USERNICKNAME LIKE CONCAT('%',#{keyword},'%')</if>
+		</if>
+	</sql>
 </mapper>

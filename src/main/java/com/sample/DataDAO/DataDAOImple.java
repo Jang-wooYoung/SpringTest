@@ -49,7 +49,7 @@ public class DataDAOImple implements DataDAO {
 	
 	//게시글 총개수
 	@Override
-	public int listCount() throws Exception {
-		return sqlSession.selectOne(namespace+".listCount");
+	public int listCount(BoardVO boardVO) throws Exception {
+		return sqlSession.selectOne(namespace+".listCount", boardVO);
 	}
 }

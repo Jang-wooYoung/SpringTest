@@ -6,10 +6,14 @@
 	int currentPage = 1;
 	int rowCount = 5;
 	int blockPage = 5;
+	String searchType = "";
+	String keyword = "";
 		
 	if(request.getParameter("currentPage") != null && !"".equals(request.getParameter("currentPage"))) currentPage = Integer.valueOf(request.getParameter("currentPage"));
 	if(request.getParameter("rowCount") != null && !"".equals(request.getParameter("rowCount"))) rowCount = Integer.valueOf(request.getParameter("rowCount"));
 	if(request.getParameter("blockPage") != null && !"".equals(request.getParameter("blockPage"))) blockPage = Integer.valueOf(request.getParameter("blockPage"));
+	if(request.getParameter("searchType") != null && !"".equals(request.getParameter("searchType"))) searchType = (String)request.getParameter("searchType");
+	if(request.getParameter("keyword") != null && !"".equals(request.getParameter("keyword"))) keyword = (String)request.getParameter("keyword");
 	
 	List<DataVO> dataList = (List<DataVO>)request.getAttribute("dataList");
 	BoardVO boardVO = (BoardVO)request.getAttribute("boardVO");
@@ -67,10 +71,17 @@
 					%>
 				</table>
 				
-				<div>
+				<div class="btn_area">
 					<button type="button" class="btn_write">글등록</button>
 				</div>
-				<div>
+				
+				<div class="search">
+					<select name="searchType">
+						<option value=""></option>
+					</select>
+				</div>
+				
+				<div class="pagination">
 					<!-- 페이징 -->
 					<%
 						blockPage = boardVO.getBlockPage();
