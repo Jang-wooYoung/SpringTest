@@ -3,6 +3,7 @@ package com.sample.DataDAO;
 import java.util.List;
 
 import com.sample.BoardVO.BoardVO;
+import com.sample.BoardVO.CommentVO;
 import com.sample.DataVO.*;;
 
 public interface DataDAO {
@@ -24,4 +25,7 @@ public interface DataDAO {
 	
 	//게시글 갯수
 	public int listCount(BoardVO boardVO) throws Exception;
+	
+	//게시글 댓글 리스트
+	public List<CommentVO> commentList(String dataUid) throws Exception;
 }

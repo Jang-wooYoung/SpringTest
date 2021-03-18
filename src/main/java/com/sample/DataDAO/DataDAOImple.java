@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.sample.BoardVO.BoardVO;
+import com.sample.BoardVO.CommentVO;
 import com.sample.DataVO.*;
 
 @Repository
@@ -51,5 +52,10 @@ public class DataDAOImple implements DataDAO {
 	@Override
 	public int listCount(BoardVO boardVO) throws Exception {
 		return sqlSession.selectOne(namespace+".listCount", boardVO);
+	}
+	
+	@Override
+	public List<CommentVO> commentList(String dataUid) throws Exception {
+		return sqlSession.selectList(namespace+".commentlist", dataUid);
 	}
 }

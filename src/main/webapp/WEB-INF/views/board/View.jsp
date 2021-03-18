@@ -1,3 +1,5 @@
+<%@page import="com.sample.BoardVO.CommentVO"%>
+<%@page import="java.util.List"%>
 <%@page import="com.sample.DataVO.DataVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -11,6 +13,7 @@
 	if(request.getParameter("blockPage") != null && !"".equals(request.getParameter("blockPage"))) blockPage = Integer.valueOf(request.getParameter("blockPage"));
 	
 	DataVO dataVO = (DataVO)request.getAttribute("detail");
+	List<CommentVO> commentList = (List<CommentVO>)request.getAttribute("commentlist");
 	
 	String pagemoveOption = "currentPage="+currentPage+"&rowCount="+rowCount+"&blockPage="+blockPage;
 %>
@@ -58,6 +61,25 @@
 				<button type="button" class="btn_delete">삭제</button>
 				<button type="button" class="btn_list">목록</button>
 			</div>
+			
+			<div id="comment">
+				<ol class="commentList">
+					<%
+						if(commentList != null && commentList.size() > 0) {
+							for(CommentVO commentVO : commentList) {%>
+								<li>
+									<p>
+										작성자 : <%=commentVO.getUserNickname() %><br />
+										작성일자 : <%=commentVO.getRegDate() %>										
+									</p>
+									<p><%=commentVO.getCommentContent() %></p>
+								</li>
+							<%}
+						}
+					%>
+				</ol>
+			</div>
+			
 		</section>
 	</body>
 		

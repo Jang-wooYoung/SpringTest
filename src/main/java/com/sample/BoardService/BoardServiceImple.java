@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.sample.BoardVO.BoardVO;
+import com.sample.BoardVO.CommentVO;
 import com.sample.DataDAO.*;
 import com.sample.DataVO.*;
 
@@ -51,4 +52,11 @@ public class BoardServiceImple implements BoardService{
 	public int listCount(BoardVO boardVO) throws Exception {
 		return dao.listCount(boardVO);
 	}
+	
+	//게시글 댓글 리스트
+	@Override
+	public List<CommentVO> commentList(String dataUid) throws Exception {
+		return dao.commentList(dataUid);
+	}
+	
 }

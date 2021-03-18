@@ -3,6 +3,7 @@ package com.sample.BoardService;
 import java.util.List;
 
 import com.sample.BoardVO.BoardVO;
+import com.sample.BoardVO.CommentVO;
 import com.sample.DataVO.*;
 
 public interface BoardService {
@@ -24,4 +25,7 @@ public interface BoardService {
 	
 	//게시글 개수
 	public int listCount(BoardVO baordVO) throws Exception;
+	
+	//게시글 댓글 리스트
+	public List<CommentVO> commentList(String dataUid) throws Exception;
 }

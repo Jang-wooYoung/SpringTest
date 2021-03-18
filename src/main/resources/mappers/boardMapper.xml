@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="boardMapper">
+<mapper namespace="boardMapper">	
 	<insert id="write">
 		INSERT INTO 
 		BOARD_DATA(DATAUID, DATATITLE, DATACONTENT, USERNICKNAME, REGDATE) 
@@ -39,6 +39,13 @@
 	
 	<select id="listCount" resultType="int">
 		SELECT COUNT(*) FROM BOARD_DATA <include refid="search"></include>;
+	</select>
+	
+	<select id="commentlist" resultType="com.sample.BoardVO.CommentVO">
+		SELECT 
+		DATAUID, COMMENTUID, COMMENTCONTENT, USERNICKNAME, REGDATE 
+		FROM BOARD_DATA_COMMENT 
+		WHERE DATAUID = #{dataUid};
 	</select>
 	
 	<sql id="search">

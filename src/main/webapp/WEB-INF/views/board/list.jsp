@@ -20,7 +20,7 @@
 	
 	int totalCount = boardVO.getTotalCount();
 	
-	String pagemoveOption = "&rowCount="+rowCount+"&blockPage="+blockPage;
+	String pagemoveOption = "rowCount="+rowCount+"&blockPage="+blockPage+"&searchType="+searchType+"&keyword="+keyword;
 %>
 <!DOCTYPE html>
 <html>
@@ -60,7 +60,7 @@
 					%>
 								<tr>
 									<td><%=number %></td>
-									<td><a href="/board/View?dataUid=<%=dataVO.getDataUid()%>&currentPage=<%=currentPage%><%=pagemoveOption%>"><%=dataVO.getDataTitle() %></a></td>
+									<td><a href="/board/View?dataUid=<%=dataVO.getDataUid()%>&currentPage=<%=currentPage%>&"<%=pagemoveOption%>"><%=dataVO.getDataTitle() %></a></td>
 									<td><%=dataVO.getUserNickname() %></td>
 									<td><%=dataVO.getRegDate() %></td>
 								</tr>
@@ -76,9 +76,22 @@
 				</div>
 				
 				<div class="search">
-					<select name="searchType">
-						<option value=""></option>
-					</select>
+					<form method="get" action="/board/list" onsubmit="return searchForm();">
+					
+						<input type="hidden" name="rowCount" value="<%=rowCount %>" />
+						<input type="hidden" name="currentPage" value="<%=currentPage %>" />
+						<input type="hidden" name="blockPage" value="<%=blockPage %>" />
+						
+						<select name="searchType">
+							<option value="" <%if(searchType == null) {%>selected="selected"<%} %>>선택</option>
+							<option value="dataTitle" <%if(searchType.equals("dataTitle")) {%>selected="selected"<%} %>>제목</option>
+							<option value="dataContent" <%if(searchType.equals("dataContent")) {%>selected="selected"<%} %>>내용</option>
+							<option value="userNickname" <%if(searchType.equals("userNickname")) {%>selected="selected"<%} %>>작성자</option>
+						</select>
+						
+						<input type="text" name="keyword" id="keyword" value="<%=keyword %>" />
+						<button type="submit" class="btn_search">검색</button>
+					</form>
 				</div>
 				
 				<div class="pagination">
@@ -99,21 +112,21 @@
 					%>
 					<ul>
 						<%if(currentPage - 1 > 0 && currentPage > 0) {%>
-							<li><a href="/board/list?currentPage=1&rowCount=<%=rowCount%>&blockPage=<%=blockPage%>">처음</a>
-							<li><a href="/board/list?currentPage=<%=currentPage-1%>&rowCount=<%=rowCount %>&blockPage=<%=blockPage%>">이전</a></li>	
+							<li><a href="/board/list?currentPage=1&rowCount=<%=rowCount%>&blockPage=<%=blockPage%>&searchType=<%=searchType%>&keyword=<%=keyword%>">처음</a>
+							<li><a href="/board/list?currentPage=<%=currentPage-1%>&rowCount=<%=rowCount %>&blockPage=<%=blockPage%>&searchType=<%=searchType%>&keyword=<%=keyword%>">이전</a></li>	
 						<%}%>
 						<%
 							int p, q;
 							for(p=0,q=0; q<totalPage && p < blockPage; p++) {
 								q = tempstartPage + p;
 							%>
-							<li><a href="/board/list?currentPage=<%=q%><%=pagemoveOption%>"><%=q %></a></li>
+							<li><a href="/board/list?currentPage=<%=q%>&<%=pagemoveOption%>"><%=q %></a></li>
 							<%
 							}
 						%>
 						<%if(currentPage<totalPage) {%>
-							<li><a href="/board/list?currentPage=<%=currentPage+1%><%=pagemoveOption%>">다음</a></li>
-							<li><a href="/board/list?currentPage=<%=totalPage%><%=pagemoveOption%>">끝</a></li>
+							<li><a href="/board/list?currentPage=<%=currentPage+1%>&<%=pagemoveOption%>">다음</a></li>
+							<li><a href="/board/list?currentPage=<%=totalPage%>&<%=pagemoveOption%>">끝</a></li>
 						<%}%>
 					</ul>
 				</div>
@@ -126,5 +139,10 @@
 				location.href = "/board/writeView";
 			});
 		});
+		
+		function searchForm() {
+			var keyword = $("#keyword").val();
+			$("#keyword").val(keyword);
+		}
 	</script>
 </html>

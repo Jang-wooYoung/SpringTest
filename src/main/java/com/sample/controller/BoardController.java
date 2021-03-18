@@ -1,7 +1,5 @@
 package com.sample.controller;
 
-import java.util.Locale;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sample.BoardService.*;
 import com.sample.BoardVO.BoardVO;
+import com.sample.BoardVO.CommentVO;
 import com.sample.DataVO.*;
 
 @Controller
@@ -94,9 +93,12 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping(value = "/View", method = RequestMethod.GET)
-	public String detail(DataVO dataVO, Model model) throws Exception {
-		logger.info("View");
+	public String detail(DataVO dataVO, Model model,CommentVO commentVO) throws Exception {
+		logger.info("View");		
+		
 		model.addAttribute("detail", service.detail(dataVO.getDataUid()));
+		model.addAttribute("commentlist", service.commentList(dataVO.getDataUid()));
+		
 		return "/board/View";
 	}
 }
