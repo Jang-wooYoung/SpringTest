@@ -59,4 +59,9 @@ public class BoardServiceImple implements BoardService{
 		return dao.commentList(dataUid);
 	}
 	
+	//게시글 댓글 작성
+	@Override
+	public void commentwrite(CommentVO commentVO) throws Exception {
+		dao.commentwrite(commentVO);
+	}
 }

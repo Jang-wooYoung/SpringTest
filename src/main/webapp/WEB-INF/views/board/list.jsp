@@ -60,7 +60,7 @@
 					%>
 								<tr>
 									<td><%=number %></td>
-									<td><a href="/board/View?dataUid=<%=dataVO.getDataUid()%>&currentPage=<%=currentPage%>&"<%=pagemoveOption%>"><%=dataVO.getDataTitle() %></a></td>
+									<td><a href="/board/View?dataUid=<%=dataVO.getDataUid()%>&currentPage=<%=currentPage%>&<%=pagemoveOption%>"><%=dataVO.getDataTitle() %></a></td>
 									<td><%=dataVO.getUserNickname() %></td>
 									<td><%=dataVO.getRegDate() %></td>
 								</tr>

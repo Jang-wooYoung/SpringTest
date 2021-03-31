@@ -7,15 +7,19 @@
 	int currentPage = 1;
 	int rowCount = 5;
 	int blockPage = 5;
+	String searchType = "";
+	String keyword = "";
 	
 	if(request.getParameter("currentPage") != null && !"".equals(request.getParameter("currentPage"))) currentPage = Integer.valueOf(request.getParameter("currentPage"));
 	if(request.getParameter("rowCount") != null && !"".equals(request.getParameter("rowCount"))) rowCount = Integer.valueOf(request.getParameter("rowCount"));
 	if(request.getParameter("blockPage") != null && !"".equals(request.getParameter("blockPage"))) blockPage = Integer.valueOf(request.getParameter("blockPage"));
+	if(request.getParameter("searchType") != null && !"".equals(request.getParameter("searchType"))) searchType = (String)request.getParameter("searchType");
+	if(request.getParameter("keyword") != null && !"".equals(request.getParameter("keyword"))) keyword = (String)request.getParameter("keyword");
 	
 	DataVO dataVO = (DataVO)request.getAttribute("detail");
 	List<CommentVO> commentList = (List<CommentVO>)request.getAttribute("commentlist");
 	
-	String pagemoveOption = "currentPage="+currentPage+"&rowCount="+rowCount+"&blockPage="+blockPage;
+	String pagemoveOption = "rowCount="+rowCount+"&blockPage="+blockPage+"&searchType="+searchType+"&keyword="+keyword;
 %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +32,7 @@
 	<body>
 		<div id="root">
 			<header>
-				<h1>게시판</h1>
+				<h1>게시판</h1>				
 			</header>
 		</div>
 		<hr />
@@ -80,6 +84,27 @@
 				</ol>
 			</div>
 			
+			<form name="commentForm" method="post">
+				<input type="hidden" id="dataUid" name="dataUid" value="<%=dataVO.getDataUid() %>" />
+				<input type="hidden" id="currentPage" name="currentPage" value="<%=currentPage %>"/>
+				<input type="hidden" id="rowCount" name="rowCount" value="<%=rowCount %>" />
+				<input type="hidden" id="blockPage" name="blockPage" value="<%=blockPage %>" />
+				<input type="hidden" id="searchType" name="searchType" value="<%=searchType %>" />
+				<input type="hidden" id="keyword" name="keyword" value="<%=keyword %>" />
+				
+				<div>
+					<label for="userNickname">댓글작성자</label>
+					<input type="text" id="userNickname" name="userNickname" />
+					<br />
+					<label for="commentContent">댓글내용</label>
+					<input type="text" id="commentContent" name="commentContent" />
+				</div>
+				
+				<div>
+					<button type="button" class="commentWrite">작성</button>
+				</div>
+			</form>
+			
 		</section>
 	</body>
 		
@@ -100,6 +125,12 @@
 			
 			$(".btn_list").on("click", function(){
 				location.href = "/board/list?<%=pagemoveOption%>";
+			});
+			
+			$(".commentWrite").on("click", function() {
+				var form = document.commentForm;
+				form.action = "/board/commentWrite";
+				form.submit();
 			});
 		});
 	</script>

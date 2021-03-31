@@ -28,4 +28,7 @@ public interface DataDAO {
 	
 	//게시글 댓글 리스트
 	public List<CommentVO> commentList(String dataUid) throws Exception;
+	
+	//게시글 댓글 작성
+	public void commentwrite(CommentVO commentVO) throws Exception;
 }

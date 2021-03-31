@@ -54,8 +54,15 @@ public class DataDAOImple implements DataDAO {
 		return sqlSession.selectOne(namespace+".listCount", boardVO);
 	}
 	
+	//게시글 댓글 리스트
 	@Override
 	public List<CommentVO> commentList(String dataUid) throws Exception {
 		return sqlSession.selectList(namespace+".commentlist", dataUid);
+	}
+	
+	//게시글 댓글 작성
+	@Override
+	public void commentwrite(CommentVO commentVO) throws Exception {
+		sqlSession.insert(namespace+".commentwrite",commentVO);
 	}
 }

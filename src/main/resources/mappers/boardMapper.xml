@@ -48,6 +48,12 @@
 		WHERE DATAUID = #{dataUid};
 	</select>
 	
+	<insert id="commentwrite">
+		INSERT INTO 
+		BOARD_DATA_COMMENT(DATAUID, COMMENTUID, COMMENTCONTENT, USERNICKNAME, REGDATE) 
+		VALUES(#{dataUid}, #{commentUid}, #{commentContent}, #{userNickname}, NOW());
+	</insert>
+	
 	<sql id="search">
 		<if test='searchType != null and searchType!=""'>
 			<if test="searchType == 'dataTitle'.toString()">WHERE DATATITLE LIKE CONCAT('%',#{keyword},'%')</if>

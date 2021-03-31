@@ -1,5 +1,8 @@
 package com.sample.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sample.BoardService.*;
 import com.sample.BoardVO.BoardVO;
@@ -100,5 +104,31 @@ public class BoardController {
 		model.addAttribute("commentlist", service.commentList(dataVO.getDataUid()));
 		
 		return "/board/View";
+	}
+	
+	//개시판 댓글 작성
+	@RequestMapping(value = "/commentWrite", method = RequestMethod.POST)
+	public String commentwrite(CommentVO commentVO, Model model, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+		logger.info("commentWrite");
+		
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMddHHmmss"); //commentUid		
+		
+		Calendar time = Calendar.getInstance();		
+		
+		String commentUid = format1.format(time.getTime());		
+		
+		commentVO.setCommentUid(commentUid);
+		
+		service.commentwrite(commentVO);
+		
+		rttr.addFlashAttribute("detail", service.detail((String)req.getParameter("dataUid")));
+		rttr.addFlashAttribute("commentlist", service.commentList((String)req.getParameter("dataUid")));
+		rttr.addAttribute("currentPage", (String)req.getParameter("currentPage"));
+		rttr.addAttribute("rowCount", (String)req.getParameter("rowCount"));
+		rttr.addAttribute("blockPage", (String)req.getParameter("blockPage"));
+		rttr.addAttribute("searchType", (String)req.getParameter("searchType"));
+		rttr.addAttribute("keyword", (String)req.getParameter("keyword"));
+		
+		return "redirect:/board/View";
 	}
 }
