@@ -19,7 +19,7 @@
 	DataVO dataVO = (DataVO)request.getAttribute("detail");
 	List<CommentVO> commentList = (List<CommentVO>)request.getAttribute("commentlist");
 	
-	String pagemoveOption = "rowCount="+rowCount+"&blockPage="+blockPage+"&searchType="+searchType+"&keyword="+keyword;
+	String pagemoveOption = "currentPage="+currentPage+"&rowCount="+rowCount+"&blockPage="+blockPage+"&searchType="+searchType+"&keyword="+keyword;
 %>
 <!DOCTYPE html>
 <html>
@@ -77,6 +77,10 @@
 										작성일자 : <%=commentVO.getRegDate() %>										
 									</p>
 									<p><%=commentVO.getCommentContent() %></p>
+									<div>
+										<button type="button" onclick="commentUpdate('<%=commentVO.getCommentUid() %>'); return false;">수정</button>
+										<button type="button" onclick="commentDelete('<%=commentVO.getCommentUid() %>'); return false;">삭제</button>
+									</div>
 								</li>
 							<%}
 						}
@@ -109,6 +113,19 @@
 	</body>
 		
 	<script>
+		function commentUpdate(commentUid) {			
+			location.href = "/board/commentupdateView?commentUid="+commentUid+"&dataUid=<%=dataVO.getDataUid()%>&<%=pagemoveOption%>";
+		}
+		
+		function commentDelete(commentUid) {
+			var comment_delete_chk = confirm("삭제 하시겠습니까?");
+			if(comment_delete_chk) {
+				location.href = "/board/commentdeleteAction?commentUid="+commentUid+"&dataUid=<%=dataVO.getDataUid()%>&<%=pagemoveOption%>";	
+			}else {
+				return false;	
+			}			
+		}		
+		
 		$(function() {
 			$(".btn_update").on("click", function(){
 				location.href = "/board/writeView?dataUid=<%=dataVO.getDataUid()%>&mode=update";
@@ -131,7 +148,7 @@
 				var form = document.commentForm;
 				form.action = "/board/commentWrite";
 				form.submit();
-			});
+			});			
 		});
 	</script>
 </html>

@@ -3,13 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="boardMapper">	
+<mapper namespace="boardMapper">
+	<!-- 게시글작성 -->
 	<insert id="write">
 		INSERT INTO 
 		BOARD_DATA(DATAUID, DATATITLE, DATACONTENT, USERNICKNAME, REGDATE) 
 		VALUES(#{dataUid}, #{dataTitle}, #{dataContent}, #{userNickname}, NOW());
 	</insert>
 	
+	<!-- 게시글목록 -->
 	<select id="datalist" resultType="com.sample.DataVO.DataVO">
 		SELECT 
 		DATAUID,DATATITLE,DATACONTENT,USERNICKNAME,REGDATE FROM BOARD_DATA 
@@ -17,6 +19,7 @@
 		ORDER BY REGDATE DESC LIMIT #{rowStart},#{rowEnd};
 	</select>
 	
+	<!-- 게시글 상세보기 -->
 	<select id="detail" parameterType="String" resultType="com.sample.DataVO.DataVO">
 		SELECT 
 		DATAUID, DATATITLE, DATACONTENT, USERNICKNAME, REGDATE 
@@ -24,23 +27,26 @@
 		WHERE DATAUID = #{dataUid};
 	</select>
 	
+	<!-- 게시글수정 -->
 	<update id="update" parameterType="com.sample.DataVO.DataVO">
 		UPDATE 
 		BOARD_DATA SET 
 		DATATITLE = #{dataTitle}, DATACONTENT = #{dataContent} 
 		WHERE DATAUID = #{dataUid};
 	</update>
-	
+	<!-- 게시글삭제 -->
 	<delete id="delete" parameterType="String">
 		DELETE 
 		FROM BOARD_DATA 
 		WHERE DATAUID = #{dataUid};
 	</delete>
 	
+	<!-- 게시글갯수 -->
 	<select id="listCount" resultType="int">
 		SELECT COUNT(*) FROM BOARD_DATA <include refid="search"></include>;
 	</select>
 	
+	<!-- 댓글 목록 -->
 	<select id="commentlist" resultType="com.sample.BoardVO.CommentVO">
 		SELECT 
 		DATAUID, COMMENTUID, COMMENTCONTENT, USERNICKNAME, REGDATE 
@@ -48,11 +54,38 @@
 		WHERE DATAUID = #{dataUid};
 	</select>
 	
+	<!-- 댓글 작성 -->
 	<insert id="commentwrite">
 		INSERT INTO 
 		BOARD_DATA_COMMENT(DATAUID, COMMENTUID, COMMENTCONTENT, USERNICKNAME, REGDATE) 
 		VALUES(#{dataUid}, #{commentUid}, #{commentContent}, #{userNickname}, NOW());
 	</insert>
+	
+	<!-- 댓글 조회 -->
+	<select id="commentdetail" parameterType="String" resultType="com.sample.BoardVO.CommentVO">
+		SELECT 
+		DATAUID, COMMENTUID, COMMENTCONTENT, USERNICKNAME, REGDATE FROM 
+		BOARD_DATA_COMMENT 
+		WHERE 
+		COMMENTUID = #{commentUid};
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="commentupdate" parameterType="com.sample.BoardVO.CommentVO">
+		UPDATE 
+		BOARD_DATA_COMMENT SET 
+		COMMENTCONTENT = #{commentContent} 
+		WHERE 
+		COMMENTUID = #{commentUid};
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="commentdelete" parameterType="String">
+		DELETE 
+		FROM BOARD_DATA_COMMENT 
+		WHERE 
+		COMMENTUID = #{commentUid};
+	</delete>	
 	
 	<sql id="search">
 		<if test='searchType != null and searchType!=""'>

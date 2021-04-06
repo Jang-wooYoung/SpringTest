@@ -30,5 +30,14 @@ public interface BoardService {
 	public List<CommentVO> commentList(String dataUid) throws Exception;
 	
 	//게시글 댓글 작성
-	public void commentwrite(CommentVO commentVO) throws Exception;	
+	public void commentwrite(CommentVO commentVO) throws Exception;
+	
+	//게시글 댓글 수정
+	public void commentupdate(CommentVO commentVO) throws Exception;
+	
+	//게시글 댓글 삭제
+	public void commentdelete(String commentUid) throws Exception;
+	
+	//게시글 댓글 상세보기
+	public CommentVO commentdetail(String commentUid) throws Exception;
 }

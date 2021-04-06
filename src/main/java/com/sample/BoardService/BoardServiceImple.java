@@ -64,4 +64,22 @@ public class BoardServiceImple implements BoardService{
 	public void commentwrite(CommentVO commentVO) throws Exception {
 		dao.commentwrite(commentVO);
 	}
+	
+	//게시글 댓글 수정
+	@Override
+	public void commentupdate(CommentVO commentVO) throws Exception {
+		dao.commentupdate(commentVO);
+	}
+	
+	//게시글 댓글 삭제
+	@Override
+	public void commentdelete(String commentUid) throws Exception {
+		dao.commentdelete(commentUid);
+	}
+	
+	//게시글 댓글 상세보기
+	@Override
+	public CommentVO commentdetail(String commentUid) throws Exception {
+		return dao.commentdetail(commentUid);
+	}
 }

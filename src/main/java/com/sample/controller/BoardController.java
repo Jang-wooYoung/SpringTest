@@ -136,4 +136,72 @@ public class BoardController {
 		
 		return "redirect:/board/View";
 	}
+	
+	//게시판 댓글 수정화면
+	@RequestMapping(value = "/commentupdateView", method = RequestMethod.GET)
+	public String commentupdateView(HttpServletRequest req, Model model) throws Exception {
+		
+		logger.info("comment update ViEW move");
+		
+		String commentUid = "";
+		
+		if(req.getParameter("commentUid") != null && !"".equals(req.getParameter("commentUid"))) commentUid = (String)req.getParameter("commentUid");
+		
+		if(commentUid != null && !"".equals(commentUid)) {			
+			model.addAttribute("CommentVO", service.commentdetail(commentUid));
+			model.addAttribute("dataUid", (String)req.getParameter("dataUid"));
+			model.addAttribute("currentPage", (String)req.getParameter("currentPage"));
+			model.addAttribute("rowCount", (String)req.getParameter("rowCount"));
+			model.addAttribute("blockPage", (String)req.getParameter("blockPage"));
+			model.addAttribute("searchType", (String)req.getParameter("searchType"));
+			model.addAttribute("keyword", (String)req.getParameter("keyword"));
+		}
+		
+		return "/board/commentUpdateView";
+	}
+	
+	//게시판 댓글 수정
+	@RequestMapping(value = "/commentupdateAction", method = RequestMethod.POST)
+	public String commentupdateAction(HttpServletRequest req, CommentVO commentVO, RedirectAttributes rttr) throws Exception {
+		logger.info("comment Update Action");
+		
+		String commentUid = "";
+		
+		if(req.getParameter("commentUid") != null && !"".equals(req.getParameter("commentUid"))) commentUid = (String)req.getParameter("commentUid");
+		
+		if(commentUid != null && !"".equals(commentUid)) {						
+			service.commentupdate(commentVO);
+			
+			rttr.addAttribute("dataUid", (String)req.getParameter("dataUid"));
+			rttr.addAttribute("currentPage", (String)req.getParameter("currentPage"));
+			rttr.addAttribute("rowCount", (String)req.getParameter("rowCount"));
+			rttr.addAttribute("blockPage", (String)req.getParameter("blockPage"));
+			rttr.addAttribute("searchType", (String)req.getParameter("searchType"));
+			rttr.addAttribute("keyword", (String)req.getParameter("keyword"));
+		}
+		
+		return "redirect:/board/View";
+	}
+	
+	//게시판 댓글 삭제
+	@RequestMapping(value = "/commentdeleteAction", method = RequestMethod.GET)
+	public String commentdeleteAction(HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+		logger.info("comment Delete Action");
+		
+		String commentUid = "";
+		
+		if(req.getParameter("commentUid") != null && !"".equals(req.getParameter("commentUid"))) commentUid = (String)req.getParameter("commentUid");
+		
+		if(commentUid != null && !"".equals(commentUid)) {						
+			service.commentdelete(commentUid);
+			
+			rttr.addAttribute("dataUid", (String)req.getParameter("dataUid"));
+			rttr.addAttribute("currentPage", (String)req.getParameter("currentPage"));
+			rttr.addAttribute("rowCount", (String)req.getParameter("rowCount"));
+			rttr.addAttribute("blockPage", (String)req.getParameter("blockPage"));
+			rttr.addAttribute("searchType", (String)req.getParameter("searchType"));
+			rttr.addAttribute("keyword", (String)req.getParameter("keyword"));
+		}
+		return "redirect:/board/View";
+	}
 }

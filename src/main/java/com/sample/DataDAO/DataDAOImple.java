@@ -65,4 +65,22 @@ public class DataDAOImple implements DataDAO {
 	public void commentwrite(CommentVO commentVO) throws Exception {
 		sqlSession.insert(namespace+".commentwrite",commentVO);
 	}
+	
+	//게시글 댓글 수정
+	@Override
+	public void commentupdate(CommentVO commentVO) throws Exception {
+		sqlSession.update(namespace+".commentupdate", commentVO);
+	}
+	
+	//게시글 댓글 삭제
+	@Override
+	public void commentdelete(String commentUid) throws Exception {
+		sqlSession.delete(namespace+".commentdelete", commentUid);
+	}
+	
+	//게시글 댓글 상세보기
+	@Override
+	public CommentVO commentdetail(String commentUid) throws Exception {
+		return sqlSession.selectOne(namespace+".commentdetail", commentUid);
+	}
 }
