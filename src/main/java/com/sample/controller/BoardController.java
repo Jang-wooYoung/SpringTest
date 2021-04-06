@@ -97,11 +97,17 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping(value = "/View", method = RequestMethod.GET)
-	public String detail(DataVO dataVO, Model model,CommentVO commentVO) throws Exception {
+	public String detail(DataVO dataVO, Model model,CommentVO commentVO, HttpServletRequest req) throws Exception {
 		logger.info("View");		
 		
-		model.addAttribute("detail", service.detail(dataVO.getDataUid()));
-		model.addAttribute("commentlist", service.commentList(dataVO.getDataUid()));
+		String dataUid = "";
+		
+		if(req.getParameter("dataUid") != null && !"".equals(req.getParameter("dataUid"))) dataUid = (String)req.getParameter("dataUid");
+		
+		if(dataUid != null && !"".equals(dataUid)) {
+			model.addAttribute("detail", service.detail(dataUid));
+			model.addAttribute("commentlist", service.commentList(dataUid));
+		}
 		
 		return "/board/View";
 	}
@@ -121,8 +127,7 @@ public class BoardController {
 		
 		service.commentwrite(commentVO);
 		
-		rttr.addFlashAttribute("detail", service.detail((String)req.getParameter("dataUid")));
-		rttr.addFlashAttribute("commentlist", service.commentList((String)req.getParameter("dataUid")));
+		rttr.addAttribute("dataUid", (String)req.getParameter("dataUid"));
 		rttr.addAttribute("currentPage", (String)req.getParameter("currentPage"));
 		rttr.addAttribute("rowCount", (String)req.getParameter("rowCount"));
 		rttr.addAttribute("blockPage", (String)req.getParameter("blockPage"));
